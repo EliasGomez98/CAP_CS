@@ -672,8 +672,8 @@ with st.expander("🧾 Resumen ejecutivo", expanded=False):
         resumen_dict["Capital semilla"] = round(float(cap_semilla),0)
         resumen_dict["Aporte mensual requerido"] = round(float(monto_aporte_mensual), 1)
     else:
-        resumen_dict["Capital semilla - input"] = round(float(cap_semilla), 0)
-        resumen_dict["Aporte mensual - input"] = round(float(monto_aporte_mensual), 0)
+        resumen_dict["Capital semilla"] = round(float(cap_semilla), 0)
+        resumen_dict["Aporte mensual"] = round(float(monto_aporte_mensual), 0)
         resumen_dict["Pensión con capital semilla"] = round(float(pension_semilla), 1)
         resumen_dict["Pensión con aportes capitalizables"] = round(float(pension_aportes), 1)
     
