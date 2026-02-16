@@ -685,12 +685,12 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
     with col1a:
         st.write("### Tabla de valores")
         st.dataframe(df_vec.style.format({
-            "Capital Semilla S/": "S/ {:,.2f}",
-            "Aporte Mensual S/": "S/ {:,.2f}"
+            "Capital Semilla": "S/ {:,.2f}",
+            "Aporte Mensual": "S/ {:,.2f}"
         }))
     
     with col2a:
-        st.write("### Proyección de capital semilla y aportes mensuales capitalizables")
+        st.write("### Proyección de capital semilla y aportes mensuales capitalizables S/")
         st.line_chart(df_vec)
 
 # =========================================================
