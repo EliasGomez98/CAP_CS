@@ -680,13 +680,17 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
         "Aporte Mensual S/": v_aportes
     }).set_index("Proyección por cohorte de nacimiento").round(2)
 
-    st.line_chart(df_vec)
+    col1a, col2a = st.columns(2)
 
-    st.write("### Tabla de valores")
-    st.dataframe(df_vec.style.format({
-        "Capital Semilla S/": "S/ {:,.2f}",
-        "Aporte Mensual S/": "S/ {:,.2f}"
-    }))
+    with col1a:
+        st.line_chart(df_vec)
+    
+    with col2a:
+        st.write("### Tabla de valores")
+        st.dataframe(df_vec.style.format({
+            "Capital Semilla S/": "S/ {:,.2f}",
+            "Aporte Mensual S/": "S/ {:,.2f}"
+        }))
 
 # =========================================================
 # 10) EXPORTACIÓN Y DESCARGA (CSV) + DIAGNÓSTICOS RÁPIDOS
@@ -701,7 +705,7 @@ with st.expander("⬇️ Exportar resultados", expanded=False):
         mime="text/csv"
     )
 
-    st.divider()
+    # st.divider()
     # st.subheader("Diagnósticos de consistencia")
 
     # # 1) Check monotonicidad básica: qx en [0,1]
