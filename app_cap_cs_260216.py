@@ -665,7 +665,6 @@ with st.expander("🧾 Resumen ejecutivo", expanded=False):
         "Tipo pensión": tipo_pension,
         "Usa mejoras (cohorte)": bool(usar_mejoras),
         "Año cohorte": int(año_nacimiento),
-        "Factor anualidad": round(float(fa),2),
     }
     
     if modo_calculo == "Pensión objetivo":
