@@ -583,49 +583,6 @@ df_progreso = pd.DataFrame(
 st.area_chart(df_progreso, color=["#06369d", "#64b5f6"])
 
 # =========================================================
-# 8.B) BLOQUE DE CONSISTENCIA: COMPARAR VS "COHORTE" (MISMO AÑO)
-# =========================================================
-# with st.expander("✅ Verificación de consistencia (mismo año de proyección)", expanded=True):
-#     # Recalcular "como cohorte" usando exactamente los mismos inputs actuales
-#     qx_coh = obtener_tabla_cohorte(sexo, int(año_nacimiento)) if usar_mejoras else qx
-
-#     fa_coh, k_coh = factor_anualidad_pension(
-#         sexo=sexo, qx=qx_coh,
-#         tasa_desc=t_jub,
-#         tipo_renta=tipo_pension,
-#         frec_nombre=frecuencia_pension,
-#         años_temporal=int(años_t_temporal),
-#         edad_jub=int(edad_jub)
-#     )
-
-#     # Si estás en modo pensión objetivo, comparamos directamente capital y aporte requeridos:
-#     if modo_calculo == "Pensión objetivo":
-#         fondo_nec_coh = fondo_necesario_para_pension(monto_pension_obj, k_coh, fa_coh)
-#         cap_coh_fin = capital_semilla_financiero(fondo_nec_coh, t_acum, int(edad_jub))
-#         ap_coh = aporte_mensual_necesario(
-#             fondo_necesario=fondo_nec_coh,
-#             tasa_acum=t_acum,
-#             qx=qx_coh,
-#             edad_inicio_ap=int(edad_inicio_aporte),
-#             edad_fin_ap=int(edad_fin_aporte),
-#             edad_jub=int(edad_jub)
-#         )
-
-#         df_check = pd.DataFrame({
-#             "Concepto": ["Factor anualidad", "Fondo necesario a jubilación", "Capital semilla", "Aporte mensual"],
-#             "Montos": [fa, fondo_nec, cap_semilla_fin, aporte_mens],
-#             "Cohorte (mismo año)": [fa_coh, fondo_nec_coh, cap_coh_fin, ap_coh],
-#             "Diferencia": [fa - fa_coh, fondo_nec - fondo_nec_coh, cap_semilla_fin - cap_coh_fin, aporte_mens - ap_coh]
-#         }).round(2)
-#         st.dataframe(df_check)
-
-#     else:
-#         st.info(
-#             "En modo 'Inversión/aportes' no se compara 'capital requerido', "
-#             "pero sí puedes validar coherencia comparando pensiones y fondos proyectados."
-#         )
-
-# =========================================================
 # 9) RESULTADOS VECTORIALES
 # =========================================================
 with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", expanded=False):
