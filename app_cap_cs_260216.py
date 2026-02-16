@@ -554,9 +554,8 @@ else:
     st.table(pd.DataFrame(data_resumen))
 
 # =========================================================
-# 8.A) BLOQUE DE CRECIMIENTO DEL FONDO
+# 8) BLOQUE DE CRECIMIENTO DEL FONDO
 # =========================================================
-
 st.subheader("📈 Crecimiento del fondo")
 edades = np.arange(0, edad_jub + 1)
 
@@ -581,7 +580,6 @@ df_progreso = pd.DataFrame(
 
 # Mantengo tu estilo de área y colores
 st.area_chart(df_progreso, color=["#06369d", "#64b5f6"])
-
 # =========================================================
 # 9) RESULTADOS VECTORIALES
 # =========================================================
@@ -657,7 +655,6 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
         file_name="cohortes_capital_semilla_aportes.csv",
         mime="text/csv"
     )
-
 # =========================================================
 # 10) SECCIÓN FINAL: RESUMEN EJECUTIVO
 # =========================================================
