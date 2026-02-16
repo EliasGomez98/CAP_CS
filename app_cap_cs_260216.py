@@ -345,7 +345,7 @@ def obtener_tabla_cohorte(sexo: str, año_nacimiento: int) -> np.ndarray:
     return q
 
 # =========================================================
-# 4) FUNCIONES ACTUARIALES CONSISTENTES
+# 4) FUNCIONES ACTUARIALES
 # =========================================================
 def obtener_prob_supervivencia_a_edad(edad: int, qx: np.ndarray) -> float:
     """Probabilidad de sobrevivir desde 0 hasta edad (exclusive)."""
@@ -419,7 +419,7 @@ def pension_desde_fondo(fondo: float, factor_anualidad: float, k: int) -> float:
     return float((fondo / factor_anualidad) / k)
 
 # =========================================================
-# 5) STREAMLIT UI (mantener look & feel del 1er código)
+# 5) STREAMLIT UI
 # =========================================================
 st.set_page_config(page_title="CEIP: Capital semilla y aportes capitalizables", layout="wide")
 st.image("https://upload.wikimedia.org/wikipedia/commons/8/8d/SBS_logotipo.svg", width=500)
@@ -557,7 +557,7 @@ else:
     st.table(pd.DataFrame(data_resumen))
 
 # =========================================================
-# 8.A) BLOQUE DE CONSISTENCIA: COMPARAR VS "COHORTE" (MISMO AÑO)
+# 8.A) BLOQUE DE CRECIMIENTO DEL FONDO
 # =========================================================
 
 st.subheader("📈 Crecimiento del fondo")
