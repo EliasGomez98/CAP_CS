@@ -422,7 +422,7 @@ def pension_desde_fondo(fondo: float, factor_anualidad: float, k: int) -> float:
 # 5) STREAMLIT UI
 # =========================================================
 st.set_page_config(page_title="CEIP: Capital semilla y aportes capitalizables", layout="wide")
-st.image("https://upload.wikimedia.org/wikipedia/commons/8/8d/SBS_logotipo.svg", width=500)
+# st.image("https://upload.wikimedia.org/wikipedia/commons/8/8d/SBS_logotipo.svg", width=500)
 st.title("🏦 CEIP - Simulador Actuarial")
 st.markdown(
     "En cumplimiento de la Resolución SBS N.° 04043-2025, se pone a disposición del CEIP una herramienta de cálculo actuarial "
@@ -431,7 +431,7 @@ st.markdown(
 
 with st.sidebar:
     st.markdown(
-        '<img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/SBS_logotipo.svg" class="sidebar-logo" width="200">',
+        '<img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Pensi%C3%B3n_Promedio_vs_A%C3%B1os_Cotizados.png" class="sidebar-logo" width="200">',
         unsafe_allow_html=True
     )
     st.header("⚙️ Configuración")
