@@ -634,14 +634,14 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
     col1, col2 = st.columns(2)
     with col1:
         pension_target_vec = st.number_input(
-            "Pensión objetivo (según frecuencia seleccionada) (S/):",
+            "Pensión objetivo (S/):",
             value=350.0,
             key="pension_target_vec"
         )
-        sexo_vec = st.selectbox("Sexo para el análisis:", ["Masculino", "Femenino"], index=(0 if sexo == "Masculino" else 1), key="sexo_vec")
+        sexo_vec = st.selectbox("Sexo:", ["Masculino", "Femenino"], index=(0 if sexo == "Masculino" else 1), key="sexo_vec")
 
     with col2:
-        rango_analisis = st.slider("Rango de años de nacimiento:", 2025, 2136, (2026, 2086), key="rango_analisis")
+        rango_analisis = st.slider("Rango de proyección por cohortes de años de nacimiento:", 2025, 2136, (2026, 2086), key="rango_analisis")
 
     # Parámetros del UI actual (para consistencia)
     edad_jub_v = int(edad_jub)
