@@ -431,7 +431,7 @@ st.markdown(
 
 with st.sidebar:
     st.markdown(
-        '<img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Pensi%C3%B3n_Promedio_vs_A%C3%B1os_Cotizados.png" class="sidebar-logo" width="200">',
+        '<img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Canadian_retirement_pension_chart.png" class="sidebar-logo" width="200">',
         unsafe_allow_html=True
     )
     st.header("⚙️ Configuración")
