@@ -420,10 +420,10 @@ st.set_page_config(page_title="CEIP: Capital semilla y aportes capitalizables", 
 # AQUI IMAGEN
 st.title("🏦 CEIP - Simulador Actuarial")
 st.markdown(
-    "En cumplimiento de la Resolución SBS N.° 04043-2025, se pone a disposición del CEIP una herramienta de cálculo actuarial "
+    "En cumplimiento de ..., se pone a disposición del CEIP una herramienta de cálculo actuarial "
     "del capital semilla y del aporte mensual, orientada a establecer una alternativa sostenible a la pensión no contributiva Pensión 65."
 )
-
+# En cumplimiento de ... = En cumplimiento de la Resolución SBS N.° 04043-2025
 with st.sidebar:
     # AQUI IMAGEN
     st.header("⚙️ Configuración")
