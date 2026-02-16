@@ -676,8 +676,8 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
 
     df_vec = pd.DataFrame({
         "Proyección por cohorte de nacimiento": años,
-        "Capital Semilla S/": v_semilla_fin,
-        "Aporte Mensual S/": v_aportes
+        "Capital Semilla": v_semilla_fin,
+        "Aporte Mensual": v_aportes
     }).set_index("Proyección por cohorte de nacimiento").round(2)
 
     col1a, col2a = st.columns(2)
@@ -687,7 +687,7 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
         st.dataframe(df_vec.style.format({
             "Capital Semilla": "S/ {:,.2f}",
             "Aporte Mensual": "S/ {:,.2f}"
-        }))
+        })).round(2)
     
     with col2a:
         st.write("### Proyección de capital semilla y aportes mensuales capitalizables S/")
