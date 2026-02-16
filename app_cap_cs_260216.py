@@ -675,10 +675,10 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
         v_aportes.append(ap_tmp)
 
     df_vec = pd.DataFrame({
-        "Proyección por cohorte de nacimiento": años,
+        "Proyección por cohortes de años de nacimiento": años,
         "Capital Semilla": v_semilla_fin,
         "Aporte Mensual": v_aportes
-    }).set_index("Proyección por cohorte de nacimiento").round(2)
+    }).set_index("Proyección por cohortes de años de nacimiento").round(2)
 
     col1a, col2a = st.columns(2)
 
@@ -695,7 +695,7 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
 
     csv_bytes = df_vec.reset_index().to_csv(index=False).encode("utf-8-sig")
     st.download_button(
-        label="Descargar CSV (proyección por cohortes de nacimiento)",
+        label="Descargar CSV (proyección por cohortes de años de nacimiento)",
         data=csv_bytes,
         file_name="cohortes_capital_semilla_aportes.csv",
         mime="text/csv"
