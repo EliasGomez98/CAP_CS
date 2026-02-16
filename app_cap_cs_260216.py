@@ -652,7 +652,6 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
 # =========================================================
 with st.expander("🧾 Resumen ejecutivo", expanded=False):
     st.subheader("Tabla resumen")
-    
     resumen_dict = {
         "Sexo": sexo,
         "Edad jubilación": int(edad_jub),
@@ -666,7 +665,6 @@ with st.expander("🧾 Resumen ejecutivo", expanded=False):
         "Usa mejoras (cohorte)": bool(usar_mejoras),
         "Año cohorte": int(año_nacimiento),
     }
-    
     if modo_calculo == "Pensión objetivo":
         resumen_dict["Pensión objetivo"] = round(float(monto_pension_obj), 2)
         resumen_dict["Capital semilla"] = round(float(cap_semilla),0)
@@ -676,10 +674,9 @@ with st.expander("🧾 Resumen ejecutivo", expanded=False):
         resumen_dict["Aporte mensual"] = round(float(monto_aporte_mensual), 0)
         resumen_dict["Pensión con capital semilla"] = round(float(pension_semilla), 1)
         resumen_dict["Pensión con aportes capitalizables"] = round(float(pension_aportes), 1)
-    
+
     df_resumen = pd.DataFrame.from_dict(resumen_dict, orient="index", columns=["Valor"])
     st.dataframe(df_resumen)
-    
     st.caption(
         "Se usan las tablas de mortalidad y factores de mejora del SPP 2025 - (TM SPP-2025-S)."
     )
