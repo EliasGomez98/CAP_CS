@@ -2,7 +2,6 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 from io import StringIO
-
 # =========================================================
 # 1) INPUTS: FACTORES DE MEJORA
 # =========================================================
@@ -249,7 +248,6 @@ if fm_h.shape != (111, 21):
 if fm_m.shape != (111, 21):
     st.warning(f"fm_m tiene shape {fm_m.shape}. Se esperaba (111,21). Se usará matriz de ceros.")
     fm_m = np.zeros((111, 21), dtype=float)
-
 # =========================================================
 # 2) INPUTS: TABLAS BASE qx (SPP-2025-S) 0-110
 # =========================================================
@@ -304,7 +302,6 @@ q_mujeres_base = np.array([
     0.324159406213365, 0.345335222153168, 0.367228247107341, 0.389838481075885, 0.4131659240588,
     1.0
 ])
-
 # =========================================================
 # 3) PROYECCIÓN qx POR COHORTE CON MEJORAS
 # =========================================================
@@ -343,7 +340,6 @@ def obtener_tabla_cohorte(sexo: str, año_nacimiento: int) -> np.ndarray:
         q[edad] = obtener_qx_proyectada(sexo, edad, año_cal)
     q = np.clip(q, 0.0, 1.0)
     return q
-
 # =========================================================
 # 4) FUNCIONES ACTUARIALES
 # =========================================================
@@ -417,7 +413,6 @@ def aporte_mensual_necesario(fondo_necesario: float, tasa_acum: float, qx: np.nd
 def pension_desde_fondo(fondo: float, factor_anualidad: float, k: int) -> float:
     """Pensión por pago (según frecuencia) derivada de fondo a jubilación."""
     return float((fondo / factor_anualidad) / k)
-
 # =========================================================
 # 5) STREAMLIT UI
 # =========================================================
@@ -467,7 +462,6 @@ with st.sidebar:
         usar_mejoras = st.checkbox("Aplicar factores de mejora en proyecciones", value=True)
         año_nacimiento = st.number_input("Año de nacimiento por cohorte:", min_value=2025, max_value=2136, value=2026, step=1)
         st.caption("Si desactivas mejoras, se usa qx base 2025 (SPP-2025-S).")
-
 # =========================================================
 # 6) SELECCIÓN DE qx (base vs cohorte)
 # =========================================================
@@ -485,7 +479,6 @@ fa, k_pagos = factor_anualidad_pension(
     años_temporal=int(años_t_temporal),
     edad_jub=int(edad_jub)
 )
-
 # =========================================================
 # 7) MOTOR PRINCIPAL
 # =========================================================
@@ -552,7 +545,6 @@ else:
         "Aportes Mensuales": [f"S/ {fondo_mensual_esperado:,.2f}", f"S/ {pension_aportes:,.2f}"]
     }
     st.table(pd.DataFrame(data_resumen))
-
 # =========================================================
 # 8) BLOQUE DE CRECIMIENTO DEL FONDO
 # =========================================================
