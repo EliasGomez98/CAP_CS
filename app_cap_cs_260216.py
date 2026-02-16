@@ -693,11 +693,6 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
         st.write("### Proyección de capital semilla y aportes mensuales capitalizables S/")
         st.line_chart(df_vec)
 
-# =========================================================
-# 10) EXPORTACIÓN Y DESCARGA (CSV) + DIAGNÓSTICOS RÁPIDOS
-# =========================================================
-with st.expander("⬇️ Exportar resultados", expanded=False):
-    st.subheader("Exportar tabla (CSV)")
     csv_bytes = df_vec.reset_index().to_csv(index=False).encode("utf-8-sig")
     st.download_button(
         label="Descargar CSV (proyección por cohortes de nacimiento)",
@@ -706,67 +701,40 @@ with st.expander("⬇️ Exportar resultados", expanded=False):
         mime="text/csv"
     )
 
-    # st.divider()
-    # st.subheader("Diagnósticos de consistencia")
-
-    # # 1) Check monotonicidad básica: qx en [0,1]
-    # q_min = float(np.min(qx))
-    # q_max = float(np.max(qx))
-    # st.write(f"• Rango qx: min={q_min:.6f}, max={q_max:.6f}")
+# =========================================================
+# 10) SECCIÓN FINAL: RESUMEN EJECUTIVO
+# =========================================================
+with st.expander("🧾 Resumen ejecutivo:", expanded=False):
+    st.subheader("Tabla resumen")
     
-    # st.line_chart(qx)
-
-    # # # 2) Check prob supervivencia a jubilación
-    # # p_jub = obtener_prob_supervivencia_a_edad(int(edad_jub), qx)
-    # # st.write(f"• Probabilidad de llegar a la jubilación (edad {int(edad_jub)}): {p_jub:.6f}")
-
-    # # 3) Check de recomposición: Fondo_nec ≈ Semilla*(1+i)^edad_jub si se ignoran aportes
-    # # (solo informativo)
-    # if modo_calculo == "Pensión objetivo":
-    #     fondo_desde_semilla = cap_semilla * ((1.0 + t_acum) ** int(edad_jub))
-    #     st.write(
-    #         "• Fondo proyectado desde capital semilla: "
-    #         f"S/ {fondo_desde_semilla:,.2f}"
-    #     )
-    #     st.write(
-    #         "• Fondo necesario a jubilación: "
-    #         f"S/ {fondo_nec:,.2f}"
-    #     )
-
-# =========================================================
-# 11) SECCIÓN FINAL: RESUMEN EJECUTIVO
-# =========================================================
-st.divider()
-st.subheader("🧾 Resumen ejecutivo:")
-
-resumen_dict = {
-    "Sexo": sexo,
-    "Edad jubilación": int(edad_jub),
-    "Años aporte": int(años_aporte),
-    "Edad inicio aporte": int(edad_inicio_aporte),
-    "Edad fin aporte": int(edad_fin_aporte),
-    "Tasa acumulación": t_acum,
-    "Tasa descuento": t_jub,
-    "Frecuencia pensión": frecuencia_pension,
-    "Tipo pensión": tipo_pension,
-    "Usa mejoras (cohorte)": bool(usar_mejoras),
-    "Año cohorte": int(año_nacimiento),
-    "Factor anualidad": round(float(fa),2),
-}
-
-if modo_calculo == "Pensión objetivo":
-    resumen_dict["Pensión objetivo"] = round(float(monto_pension_obj), 2)
-    resumen_dict["Capital semilla"] = round(float(cap_semilla),0)
-    resumen_dict["Aporte mensual requerido"] = round(float(monto_aporte_mensual), 1)
-else:
-    resumen_dict["Capital semilla - input"] = round(float(cap_semilla), 0)
-    resumen_dict["Aporte mensual - input"] = round(float(monto_aporte_mensual), 0)
-    resumen_dict["Pensión con capital semilla"] = round(float(pension_semilla), 1)
-    resumen_dict["Pensión con aportes capitalizables"] = round(float(pension_aportes), 1)
-
-df_resumen = pd.DataFrame.from_dict(resumen_dict, orient="index", columns=["Valor"])
-st.dataframe(df_resumen)
-
-st.caption(
-    "Se usan las tablas de mortalidad y factores de mejora del SPP 2025 - (TM SPP-2025-S)."
-)
+    resumen_dict = {
+        "Sexo": sexo,
+        "Edad jubilación": int(edad_jub),
+        "Años aporte": int(años_aporte),
+        "Edad inicio aporte": int(edad_inicio_aporte),
+        "Edad fin aporte": int(edad_fin_aporte),
+        "Tasa acumulación": t_acum,
+        "Tasa descuento": t_jub,
+        "Frecuencia pensión": frecuencia_pension,
+        "Tipo pensión": tipo_pension,
+        "Usa mejoras (cohorte)": bool(usar_mejoras),
+        "Año cohorte": int(año_nacimiento),
+        "Factor anualidad": round(float(fa),2),
+    }
+    
+    if modo_calculo == "Pensión objetivo":
+        resumen_dict["Pensión objetivo"] = round(float(monto_pension_obj), 2)
+        resumen_dict["Capital semilla"] = round(float(cap_semilla),0)
+        resumen_dict["Aporte mensual requerido"] = round(float(monto_aporte_mensual), 1)
+    else:
+        resumen_dict["Capital semilla - input"] = round(float(cap_semilla), 0)
+        resumen_dict["Aporte mensual - input"] = round(float(monto_aporte_mensual), 0)
+        resumen_dict["Pensión con capital semilla"] = round(float(pension_semilla), 1)
+        resumen_dict["Pensión con aportes capitalizables"] = round(float(pension_aportes), 1)
+    
+    df_resumen = pd.DataFrame.from_dict(resumen_dict, orient="index", columns=["Valor"])
+    st.dataframe(df_resumen)
+    
+    st.caption(
+        "Se usan las tablas de mortalidad y factores de mejora del SPP 2025 - (TM SPP-2025-S)."
+    )
