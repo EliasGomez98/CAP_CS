@@ -540,9 +540,9 @@ else:
     st.divider()
     st.subheader("📊 Comparativa de Resultados")
     data_resumen = {
-        "Concepto": ["Fondo Proyectado a Jubilación", f"Pensión {frecuencia_pension} (por pago)"],
-        "Capital Semilla": [f"S/ {fondo_semilla:,.2f}", f"S/ {pension_semilla:,.2f}"],
-        "Aportes Mensuales": [f"S/ {fondo_mensual_esperado:,.2f}", f"S/ {pension_aportes:,.2f}"]
+        "Concepto": ["Fondo proyectado a jubilación", f"Pensión {frecuencia_pension}"],
+        "Capital Semilla": [f"S/ {fondo_semilla:,.0f}", f"S/ {pension_semilla:,.0f}"],
+        "Aportes Mensuales": [f"S/ {fondo_mensual_esperado:,.0f}", f"S/ {pension_aportes:,.0f}"]
     }
     st.table(pd.DataFrame(data_resumen))
 # =========================================================
@@ -650,7 +650,7 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
 # =========================================================
 # 10) SECCIÓN FINAL: RESUMEN EJECUTIVO
 # =========================================================
-with st.expander("🧾 Resumen ejecutivo:", expanded=False):
+with st.expander("🧾 Resumen ejecutivo", expanded=False):
     st.subheader("Tabla resumen")
     
     resumen_dict = {
