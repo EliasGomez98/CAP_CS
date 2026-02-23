@@ -456,7 +456,6 @@ with st.sidebar:
     with st.expander("🧬 Proyecciones por cohorte", expanded=False):
         usar_mejoras = st.checkbox("Aplicar factores de mejora en proyecciones", value=True)
         año_nacimiento = st.number_input("Año de nacimiento por cohorte:", min_value=2025, max_value=2136, value=2026, step=1)
-        st.caption("Si desactivas mejoras, se usa qx base 2025.")
 # =========================================================
 # 6) SELECCIÓN DE qx (base vs cohorte)
 # =========================================================
@@ -496,7 +495,7 @@ if modo_calculo == "Pensión objetivo":
 
     st.divider()
     c1, c2 = st.columns(2)
-    c1.metric("Capital Semilla Necesario", f"S/ {cap_semilla_fin:,.2f}")
+    c1.metric("Capital Necesario", f"S/ {cap_semilla_fin:,.2f}")
     c2.metric("Aporte Mensual Necesario", f"S/ {aporte_mens:,.2f}")
 
     cap_semilla = cap_semilla_fin
@@ -514,7 +513,7 @@ if modo_calculo == "Pensión objetivo":
 else:
     col_a, col_b = st.columns(2)
     with col_a:
-        input_cap_semilla = st.number_input("Capital Semilla (S/):", value=5500.0)
+        input_cap_semilla = st.number_input("Capital (S/):", value=5500.0)
     with col_b:
         input_aporte_mensual = st.number_input("Aporte Mensual (S/):", value=55.0)
 
@@ -536,7 +535,7 @@ else:
     st.subheader("📊 Comparativa de Resultados")
     data_resumen = {
         "Concepto": ["Fondo proyectado a jubilación", f"Pensión {frecuencia_pension}"],
-        "Capital Semilla": [f"S/ {fondo_semilla:,.0f}", f"S/ {pension_semilla:,.0f}"],
+        "Capital": [f"S/ {fondo_semilla:,.0f}", f"S/ {pension_semilla:,.0f}"],
         "Aportes Mensuales": [f"S/ {fondo_mensual_esperado:,.0f}", f"S/ {pension_aportes:,.0f}"]
     }
     st.table(pd.DataFrame(data_resumen))
@@ -571,9 +570,7 @@ st.area_chart(df_progreso, color=["#06369d", "#64b5f6"])
 # 9) RESULTADOS VECTORIALES
 # =========================================================
 
-
 import altair as alt
-
 
 with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", expanded=False):
     st.subheader("📊 Proyecciones: Capital Semilla y Aporte Mensual requeridos")
@@ -733,6 +730,3 @@ with st.expander("🧾 Resumen ejecutivo", expanded=False):
 
     df_resumen = pd.DataFrame.from_dict(resumen_dict, orient="index", columns=["Valor"])
     st.dataframe(df_resumen)
-    st.caption(
-        "Se usan las tablas de mortalidad y factores de mejora."
-    )
