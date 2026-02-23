@@ -620,7 +620,7 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
 
     df_vec = pd.DataFrame({
         "Proyección por cohortes de años de nacimiento": años,
-        "Capital Semilla": v_semilla_fin,
+        "Capital": v_semilla_fin,
         "Aporte Mensual": v_aportes
     }).set_index("Proyección por cohortes de años de nacimiento").round(2)
 
@@ -629,7 +629,7 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
     with col1a:
         st.write("### Tabla de valores")
         st.dataframe(df_vec.style.format({
-            "Capital Semilla": "S/ {:,.2f}",
+            "Capital": "S/ {:,.2f}",
             "Aporte Mensual": "S/ {:,.2f}"
         }))
 
@@ -652,7 +652,7 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
                 x=alt.X(f"{x_col}:Q", title="Cohortes de año de nacimiento"),
                 y=alt.Y(
                     f"{y1_col}:Q",
-                    title="Capital Semilla (S/)",
+                    title="Capital (S/)",
                     scale=alt.Scale(domain=[y1_min - y1_pad, y1_max + y1_pad]),
                     axis=alt.Axis(format=",.2f"),
                 ),
@@ -720,12 +720,12 @@ with st.expander("🧾 Resumen ejecutivo", expanded=False):
     }
     if modo_calculo == "Pensión objetivo":
         resumen_dict["Pensión objetivo"] = round(float(monto_pension_obj), 2)
-        resumen_dict["Capital semilla"] = round(float(cap_semilla),0)
+        resumen_dict["Capital"] = round(float(cap_semilla),0)
         resumen_dict["Aporte mensual requerido"] = round(float(monto_aporte_mensual), 1)
     else:
-        resumen_dict["Capital semilla"] = round(float(cap_semilla), 0)
+        resumen_dict["Capital"] = round(float(cap_semilla), 0)
         resumen_dict["Aporte mensual"] = round(float(monto_aporte_mensual), 0)
-        resumen_dict["Pensión con capital semilla"] = round(float(pension_semilla), 1)
+        resumen_dict["Pensión con capital"] = round(float(pension_semilla), 1)
         resumen_dict["Pensión con aportes capitalizables"] = round(float(pension_aportes), 1)
 
     df_resumen = pd.DataFrame.from_dict(resumen_dict, orient="index", columns=["Valor"])
