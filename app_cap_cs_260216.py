@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 from io import StringIO
+
 # =========================================================
 # 1) INPUTS: FACTORES DE MEJORA
 # =========================================================
@@ -417,15 +418,13 @@ def pension_desde_fondo(fondo: float, factor_anualidad: float, k: int) -> float:
 # 5) STREAMLIT UI
 # =========================================================
 st.set_page_config(page_title="CEIP: Capital semilla y aportes capitalizables", layout="wide")
-# AQUI IMAGEN
+st.image("https://upload.wikimedia.org/wikipedia/commons/8/8d/SBS_logotipo.svg", width=500)
 st.title("🏦 CEIP - Simulador Actuarial")
-st.markdown(
-    "En cumplimiento de ..., se pone a disposición del CEIP una herramienta de cálculo actuarial "
-    "del capital semilla y del aporte mensual, orientada a establecer una alternativa sostenible a la pensión no contributiva Pensión 65."
-)
+st.markdown("En cumplimiento de la Resolución SBS N.° 04043-2025, se pone a disposición del CEIP una herramienta de cálculo actuarial del capital semilla y del aporte mensual, orientada a establecer una alternativa sostenible a la pensión no contributiva Pensión 65.")
+
 # En cumplimiento de ... = En cumplimiento de la Resolución SBS N.° 04043-2025
 with st.sidebar:
-    # AQUI IMAGEN
+    st.markdown('<img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/SBS_logotipo.svg" class="sidebar-logo" width="200">', unsafe_allow_html=True)
     st.header("⚙️ Configuración")
     modo_calculo = st.radio("Modo de Cálculo:", ["Pensión objetivo", "Inversión/aportes"], index=0)
 
@@ -575,6 +574,11 @@ st.area_chart(df_progreso, color=["#06369d", "#64b5f6"])
 # =========================================================
 # 9) RESULTADOS VECTORIALES
 # =========================================================
+
+
+import altair as alt
+
+
 with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", expanded=False):
     st.subheader("📊 Proyecciones: Capital Semilla y Aporte Mensual requeridos")
 
@@ -635,10 +639,66 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
             "Capital Semilla": "S/ {:,.2f}",
             "Aporte Mensual": "S/ {:,.2f}"
         }))
-    
+
     with col2a:
-        st.write("### Proyección de capital semilla y aportes mensuales capitalizables S/")
-        st.line_chart(df_vec)
+        st.write("### Proyección (S/)")
+    
+        df_plot = df_vec.reset_index()
+        x_col = "Proyección por cohortes de años de nacimiento"
+    
+        # --------- 1) Capital Semilla ----------
+        y1_col = "Capital Semilla"
+        y1_min = float(df_plot[y1_col].min())
+        y1_max = float(df_plot[y1_col].max())
+        y1_pad = (y1_max - y1_min) * 0.10 if y1_max != y1_min else max(1.0, y1_max * 0.05)
+    
+        chart_capital = (
+            alt.Chart(df_plot)
+            .mark_line(strokeWidth=3)  # SOLO línea continua
+            .encode(
+                x=alt.X(f"{x_col}:Q", title="Cohortes de año de nacimiento"),
+                y=alt.Y(
+                    f"{y1_col}:Q",
+                    title="Capital Semilla (S/)",
+                    scale=alt.Scale(domain=[y1_min - y1_pad, y1_max + y1_pad]),
+                    axis=alt.Axis(format=",.2f"),
+                ),
+                tooltip=[
+                    alt.Tooltip(f"{x_col}:Q", title="Cohorte", format=",.0f"),
+                    alt.Tooltip(f"{y1_col}:Q", title="Capital Semilla (S/)", format=",.2f"),
+                ],
+            )
+            .properties(height=260)
+        )
+    
+        st.altair_chart(chart_capital, use_container_width=True)
+    
+        # --------- 2) Aporte Mensual ----------
+        y2_col = "Aporte Mensual"
+        y2_min = float(df_plot[y2_col].min())
+        y2_max = float(df_plot[y2_col].max())
+        y2_pad = (y2_max - y2_min) * 0.10 if y2_max != y2_min else max(0.5, y2_max * 0.05)
+    
+        chart_aporte = (
+            alt.Chart(df_plot)
+            .mark_line(strokeWidth=3)  # SOLO línea continua
+            .encode(
+                x=alt.X(f"{x_col}:Q", title="Cohortes de año de nacimiento"),
+                y=alt.Y(
+                    f"{y2_col}:Q",
+                    title="Aporte Mensual (S/)",
+                    scale=alt.Scale(domain=[y2_min - y2_pad, y2_max + y2_pad]),
+                    axis=alt.Axis(format=",.2f"),
+                ),
+                tooltip=[
+                    alt.Tooltip(f"{x_col}:Q", title="Cohorte", format=",.0f"),
+                    alt.Tooltip(f"{y2_col}:Q", title="Aporte Mensual (S/)", format=",.2f"),
+                ],
+            )
+            .properties(height=260)
+        )
+    
+        st.altair_chart(chart_aporte, use_container_width=True)
 
     csv_bytes = df_vec.reset_index().to_csv(index=False).encode("utf-8-sig")
     st.download_button(
