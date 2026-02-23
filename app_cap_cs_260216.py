@@ -385,7 +385,7 @@ def fondo_necesario_para_pension(pension_por_pago: float, k: int, factor_anualid
     return float((pension_por_pago * k) * factor_anualidad)
 
 def capital_semilla_financiero(fondo_necesario: float, tasa_acum: float, edad_jub: int) -> float:
-    """Capital semilla (edad 0) sin ponderar por supervivencia: consistente con 1er código."""
+    """Capital (edad 0) sin ponderar por supervivencia: consistente con 1er código."""
     return float(fondo_necesario / ((1.0 + tasa_acum) ** edad_jub))
 
 def capital_semilla_esperado(fondo_necesario: float, tasa_acum: float, edad_jub: int, qx: np.ndarray) -> float:
@@ -496,7 +496,7 @@ if modo_calculo == "Pensión objetivo":
 
     st.divider()
     c1, c2 = st.columns(2)
-    c1.metric("Capital Semilla Necesario", f"S/ {cap_semilla_fin:,.2f}")
+    c1.metric("Capital Necesario", f"S/ {cap_semilla_fin:,.2f}")
     c2.metric("Aporte Mensual Necesario", f"S/ {aporte_mens:,.2f}")
 
     cap_semilla = cap_semilla_fin
@@ -514,7 +514,7 @@ if modo_calculo == "Pensión objetivo":
 else:
     col_a, col_b = st.columns(2)
     with col_a:
-        input_cap_semilla = st.number_input("Capital Semilla (S/):", value=5500.0)
+        input_cap_semilla = st.number_input("Capital (S/):", value=5500.0)
     with col_b:
         input_aporte_mensual = st.number_input("Aporte Mensual (S/):", value=55.0)
 
@@ -536,7 +536,7 @@ else:
     st.subheader("📊 Comparativa de Resultados")
     data_resumen = {
         "Concepto": ["Fondo proyectado a jubilación", f"Pensión {frecuencia_pension}"],
-        "Capital Semilla": [f"S/ {fondo_semilla:,.0f}", f"S/ {pension_semilla:,.0f}"],
+        "Capital": [f"S/ {fondo_semilla:,.0f}", f"S/ {pension_semilla:,.0f}"],
         "Aportes Mensuales": [f"S/ {fondo_mensual_esperado:,.0f}", f"S/ {pension_aportes:,.0f}"]
     }
     st.table(pd.DataFrame(data_resumen))
@@ -561,7 +561,7 @@ for t in edades:
     progreso_mensual.append(acum_m)
 
 df_progreso = pd.DataFrame(
-    {"Capital semilla": progreso_semilla, "Aportes mensuales": progreso_mensual},
+    {"Capital": progreso_semilla, "Aportes mensuales": progreso_mensual},
     index=edades
 ).round(2)
 
@@ -576,7 +576,7 @@ import altair as alt
 
 
 with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", expanded=False):
-    st.subheader("📊 Proyecciones: Capital Semilla y Aporte Mensual requeridos")
+    st.subheader("📊 Proyecciones: Capital y Aporte Mensual requeridos")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -623,7 +623,7 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
 
     df_vec = pd.DataFrame({
         "Proyección por cohortes de años de nacimiento": años,
-        "Capital Semilla": v_semilla_fin,
+        "Capital": v_semilla_fin,
         "Aporte Mensual": v_aportes
     }).set_index("Proyección por cohortes de años de nacimiento").round(2)
 
@@ -632,7 +632,7 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
     with col1a:
         st.write("### Tabla de valores")
         st.dataframe(df_vec.style.format({
-            "Capital Semilla": "S/ {:,.2f}",
+            "Capital": "S/ {:,.2f}",
             "Aporte Mensual": "S/ {:,.2f}"
         }))
 
@@ -642,8 +642,8 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
         df_plot = df_vec.reset_index()
         x_col = "Proyección por cohortes de años de nacimiento"
     
-        # --------- 1) Capital Semilla ----------
-        y1_col = "Capital Semilla"
+        # --------- 1) Capital ----------
+        y1_col = "Capital"
         y1_min = float(df_plot[y1_col].min())
         y1_max = float(df_plot[y1_col].max())
         y1_pad = (y1_max - y1_min) * 0.10 if y1_max != y1_min else max(1.0, y1_max * 0.05)
@@ -655,13 +655,13 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
                 x=alt.X(f"{x_col}:Q", title="Cohortes de año de nacimiento"),
                 y=alt.Y(
                     f"{y1_col}:Q",
-                    title="Capital Semilla (S/)",
+                    title="Capital (S/)",
                     scale=alt.Scale(domain=[y1_min - y1_pad, y1_max + y1_pad]),
                     axis=alt.Axis(format=",.2f"),
                 ),
                 tooltip=[
                     alt.Tooltip(f"{x_col}:Q", title="Cohorte", format=",.0f"),
-                    alt.Tooltip(f"{y1_col}:Q", title="Capital Semilla (S/)", format=",.2f"),
+                    alt.Tooltip(f"{y1_col}:Q", title="Capital (S/)", format=",.2f"),
                 ],
             )
             .properties(height=260)
@@ -723,12 +723,12 @@ with st.expander("🧾 Resumen ejecutivo", expanded=False):
     }
     if modo_calculo == "Pensión objetivo":
         resumen_dict["Pensión objetivo"] = round(float(monto_pension_obj), 2)
-        resumen_dict["Capital semilla"] = round(float(cap_semilla),0)
+        resumen_dict["Capital"] = round(float(cap_semilla),0)
         resumen_dict["Aporte mensual requerido"] = round(float(monto_aporte_mensual), 1)
     else:
-        resumen_dict["Capital semilla"] = round(float(cap_semilla), 0)
+        resumen_dict["Capital"] = round(float(cap_semilla), 0)
         resumen_dict["Aporte mensual"] = round(float(monto_aporte_mensual), 0)
-        resumen_dict["Pensión con capital semilla"] = round(float(pension_semilla), 1)
+        resumen_dict["Pensión con capital"] = round(float(pension_semilla), 1)
         resumen_dict["Pensión con aportes capitalizables"] = round(float(pension_aportes), 1)
 
     df_resumen = pd.DataFrame.from_dict(resumen_dict, orient="index", columns=["Valor"])
