@@ -460,7 +460,7 @@ with st.sidebar:
     with st.expander("🧬 Proyecciones por cohorte", expanded=False):
         usar_mejoras = st.checkbox("Aplicar factores de mejora en proyecciones", value=True)
         año_nacimiento = st.number_input("Año de nacimiento por cohorte:", min_value=2025, max_value=2136, value=2026, step=1)
-        st.caption("Si desactivas mejoras, se usa qx base 2025 (SPP-2025-S).")
+        st.caption("Si desactivas mejoras, se usa qx base 2025.")
 # =========================================================
 # 6) SELECCIÓN DE qx (base vs cohorte)
 # =========================================================
@@ -738,5 +738,5 @@ with st.expander("🧾 Resumen ejecutivo", expanded=False):
     df_resumen = pd.DataFrame.from_dict(resumen_dict, orient="index", columns=["Valor"])
     st.dataframe(df_resumen)
     st.caption(
-        "Se usan las tablas de mortalidad y factores de mejora del SPP 2025 - (TM SPP-2025-S)."
+        "Se usan las tablas de mortalidad y factores de mejora."
     )
