@@ -417,14 +417,10 @@ def pension_desde_fondo(fondo: float, factor_anualidad: float, k: int) -> float:
 # =========================================================
 # 5) STREAMLIT UI
 # =========================================================
-st.set_page_config(page_title="Actuarial: capital semilla y aportes capitalizables", layout="wide")
-# st.image("https://upload.wikimedia.org/wikipedia/commons/8/8d/SBS_logotipo.svg", width=500)
-st.title("🏦 Simulador Actuarial de Pensiones - Capital semilla y aportes mensuales capitalizables.")
-st.markdown("Herramienta de cálculo actuarial del capital semilla y del aporte mensual, orientada a establecer una alternativa sostenible a la pensión no contributiva Pensión 65.")
+st.set_page_config(page_title="Actuarial: Capital y aportes capitalizables", layout="wide")
+st.title("🏦 Simulador Actuarial - Capital y aportes mensuales capitalizables.")
 
-# En cumplimiento de ... = En cumplimiento de la Resolución SBS N.° 04043-2025
 with st.sidebar:
-#    st.markdown('<img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/SBS_logotipo.svg" class="sidebar-logo" width="200">', unsafe_allow_html=True)
     st.header("⚙️ Configuración")
     modo_calculo = st.radio("Modo de Cálculo:", ["Pensión objetivo", "Inversión/aportes"], index=0)
 
