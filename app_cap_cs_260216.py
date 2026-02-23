@@ -560,7 +560,7 @@ for t in edades:
     progreso_mensual.append(acum_m)
 
 df_progreso = pd.DataFrame(
-    {"Capital semilla": progreso_semilla, "Aportes mensuales": progreso_mensual},
+    {"Capital": progreso_semilla, "Aportes mensuales": progreso_mensual},
     index=edades
 ).round(2)
 
@@ -573,7 +573,7 @@ st.area_chart(df_progreso, color=["#06369d", "#64b5f6"])
 import altair as alt
 
 with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", expanded=False):
-    st.subheader("📊 Proyecciones: Capital Semilla y Aporte Mensual requeridos")
+    st.subheader("📊 Proyecciones: Capital y Aporte Mensual requeridos")
 
     col1, col2 = st.columns(2)
     with col1:
