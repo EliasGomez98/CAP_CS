@@ -1,4 +1,4 @@
-import streamlit as st
+	import streamlit as st
 import numpy as np
 import pandas as pd
 from io import StringIO
@@ -456,6 +456,7 @@ with st.sidebar:
     with st.expander("🧬 Proyecciones por cohorte", expanded=False):
         usar_mejoras = st.checkbox("Aplicar factores de mejora en proyecciones", value=True)
         año_nacimiento = st.number_input("Año de nacimiento por cohorte:", min_value=2025, max_value=2136, value=2026, step=1)
+        st.caption("Si desactivas mejoras, se usa qx base 2025.")
 # =========================================================
 # 6) SELECCIÓN DE qx (base vs cohorte)
 # =========================================================
@@ -495,7 +496,7 @@ if modo_calculo == "Pensión objetivo":
 
     st.divider()
     c1, c2 = st.columns(2)
-    c1.metric("Capital Necesario", f"S/ {cap_semilla_fin:,.2f}")
+    c1.metric("Capital Semilla Necesario", f"S/ {cap_semilla_fin:,.2f}")
     c2.metric("Aporte Mensual Necesario", f"S/ {aporte_mens:,.2f}")
 
     cap_semilla = cap_semilla_fin
@@ -513,7 +514,7 @@ if modo_calculo == "Pensión objetivo":
 else:
     col_a, col_b = st.columns(2)
     with col_a:
-        input_cap_semilla = st.number_input("Capital (S/):", value=5500.0)
+        input_cap_semilla = st.number_input("Capital Semilla (S/):", value=5500.0)
     with col_b:
         input_aporte_mensual = st.number_input("Aporte Mensual (S/):", value=55.0)
 
@@ -535,7 +536,7 @@ else:
     st.subheader("📊 Comparativa de Resultados")
     data_resumen = {
         "Concepto": ["Fondo proyectado a jubilación", f"Pensión {frecuencia_pension}"],
-        "Capital": [f"S/ {fondo_semilla:,.0f}", f"S/ {pension_semilla:,.0f}"],
+        "Capital Semilla": [f"S/ {fondo_semilla:,.0f}", f"S/ {pension_semilla:,.0f}"],
         "Aportes Mensuales": [f"S/ {fondo_mensual_esperado:,.0f}", f"S/ {pension_aportes:,.0f}"]
     }
     st.table(pd.DataFrame(data_resumen))
@@ -560,7 +561,7 @@ for t in edades:
     progreso_mensual.append(acum_m)
 
 df_progreso = pd.DataFrame(
-    {"Capital": progreso_semilla, "Aportes mensuales": progreso_mensual},
+    {"Capital semilla": progreso_semilla, "Aportes mensuales": progreso_mensual},
     index=edades
 ).round(2)
 
@@ -570,10 +571,12 @@ st.area_chart(df_progreso, color=["#06369d", "#64b5f6"])
 # 9) RESULTADOS VECTORIALES
 # =========================================================
 
+
 import altair as alt
 
+
 with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", expanded=False):
-    st.subheader("📊 Proyecciones: Capital y Aporte Mensual requeridos")
+    st.subheader("📊 Proyecciones: Capital Semilla y Aporte Mensual requeridos")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -620,7 +623,7 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
 
     df_vec = pd.DataFrame({
         "Proyección por cohortes de años de nacimiento": años,
-        "Capital": v_semilla_fin,
+        "Capital Semilla": v_semilla_fin,
         "Aporte Mensual": v_aportes
     }).set_index("Proyección por cohortes de años de nacimiento").round(2)
 
@@ -629,7 +632,7 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
     with col1a:
         st.write("### Tabla de valores")
         st.dataframe(df_vec.style.format({
-            "Capital": "S/ {:,.2f}",
+            "Capital Semilla": "S/ {:,.2f}",
             "Aporte Mensual": "S/ {:,.2f}"
         }))
 
@@ -652,7 +655,7 @@ with st.expander("📌 Proyecciones por cohortes de nacimiento (2026-2126+)", ex
                 x=alt.X(f"{x_col}:Q", title="Cohortes de año de nacimiento"),
                 y=alt.Y(
                     f"{y1_col}:Q",
-                    title="Capital (S/)",
+                    title="Capital Semilla (S/)",
                     scale=alt.Scale(domain=[y1_min - y1_pad, y1_max + y1_pad]),
                     axis=alt.Axis(format=",.2f"),
                 ),
@@ -720,13 +723,16 @@ with st.expander("🧾 Resumen ejecutivo", expanded=False):
     }
     if modo_calculo == "Pensión objetivo":
         resumen_dict["Pensión objetivo"] = round(float(monto_pension_obj), 2)
-        resumen_dict["Capital"] = round(float(cap_semilla),0)
+        resumen_dict["Capital semilla"] = round(float(cap_semilla),0)
         resumen_dict["Aporte mensual requerido"] = round(float(monto_aporte_mensual), 1)
     else:
-        resumen_dict["Capital"] = round(float(cap_semilla), 0)
+        resumen_dict["Capital semilla"] = round(float(cap_semilla), 0)
         resumen_dict["Aporte mensual"] = round(float(monto_aporte_mensual), 0)
-        resumen_dict["Pensión con capital"] = round(float(pension_semilla), 1)
+        resumen_dict["Pensión con capital semilla"] = round(float(pension_semilla), 1)
         resumen_dict["Pensión con aportes capitalizables"] = round(float(pension_aportes), 1)
 
     df_resumen = pd.DataFrame.from_dict(resumen_dict, orient="index", columns=["Valor"])
     st.dataframe(df_resumen)
+    st.caption(
+        "Se usan las tablas de mortalidad y factores de mejora."
+    )
